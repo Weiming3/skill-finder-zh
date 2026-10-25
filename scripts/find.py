@@ -177,13 +177,13 @@ def print_results(query: str, results: list[dict[str, Any]], top: int) -> None:
             print(f"   更新:{item['updated']}")
         if "github.com/" in item["url"]:
             slug = item["url"].split("github.com/")[-1]
-            print(f"   安装(mavis): mavis skill install {item['url']}")
-            print(f"   安装(npx):   npx skills add {slug}")
+            print(f"   安装:npx skills add {slug}")
         print(f"   数据源:{item['source']} (cross-source hits: {item['cross_source_hits']})")
         print()
 
     print("💡 下一步:")
-    print("   - 直接装:mavis skill install <URL> 或 npx skills add <owner/repo>")
+    print("   - 直接装:npx skills add <owner/repo>")
+    print("   - 官方 CLI 直接搜:npx skills find '<关键词>'")
     print("   - 再找 5 个相关:跑 python find.py '<相关关键词>'")
     print("   - 调权重:--min-stars 50 或更高\n")
 
