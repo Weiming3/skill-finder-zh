@@ -65,17 +65,16 @@ license: Apache 2.0
 
 ### 第二步:多源并发搜索
 ```bash
-# 并发 4 个数据源
+# 并发 3 个数据源
 gh api 'search/repositories?q=PDF+agent-skill+language:zh&sort=stars'
-curl -s https://raw.githubusercontent.com/ComposioHQ/awesome-claude-skills/main/README.md
+curl -s https://raw.githubusercontent.com/ComposioHQ/awesome-claude-skills/master/README.md
 curl -s 'https://skills.sh/api/search?q=PDF'
-curl -s 'https://skillsmp.com/api/skills?q=PDF'
 ```
 
 ### 第三步:合并去重 + 排序
 - 用 repo URL 作为唯一 key
 - 累加每个仓库在不同源的命中数(在 awesome + skills.sh + GitHub 都出现 = 高置信)
-- 按 `(stars * 0.6 + 跨源命中数 * 0.4)` 排序
+- 按 `(stars * 0.6 + 跨源命中数 * 1000 * 0.4)` 排序
 
 ### 第四步:生成结果
 对每个 top-5 写推荐说明:
