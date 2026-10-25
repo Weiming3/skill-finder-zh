@@ -110,7 +110,8 @@ def search_skills_sh(query: str) -> list[dict[str, Any]]:
             {
                 "name": item.get("name", ""),
                 "url": item.get("url", ""),
-                "stars": item.get("installs", 0),
+                "installs": int(item.get("installs") or 0),
+                "stars": 0,
                 "description": item.get("description", ""),
                 "updated": "",
                 "source": "skills.sh",
@@ -128,7 +129,9 @@ def aggregate(results_per_source: list[list[dict[str, Any]]]) -> list[dict[str, 
     merged: dict[str, dict[str, Any]] = {}
     for items in results_per_source:
         for item in items:
-            url = item["url"]
+            url = item.get("url") or ""
+            if not url:
+                continue          # 没有 URL 的条目无法去重也无法安装，直接丢弃
             if url not in merged:
                 merged[url] = {**item, "cross_source_hits": 0}
             merged[url]["cross_source_hits"] += 1
@@ -159,7 +162,11 @@ def print_results(query: str, results: list[dict[str, Any]], top: int) -> None:
     for i, item in enumerate(results[:top], 1):
         emoji = EMOJI_RANK[i - 1] if i - 1 < len(EMOJI_RANK) else f"{i}."
         stars = item["stars"]
-        stars_str = f"({stars:,} ⭐)" if stars > 0 else ""
+        installs = item.get("installs") or 0
+        if installs:
+            stars_str = f"({installs:,} installs)"
+        else:
+            stars_str = f"({stars:,} ⭐)" if stars > 0 else ""
         name = item["name"] or "(unknown)"
         print(f"{emoji} {name} {stars_str}")
         print(f"   URL: {item['url']}")
