@@ -140,10 +140,8 @@ skill-finder-zh/
 ├── README.md                 # 本文件
 ├── LICENSE                   # Apache 2.0
 ├── .gitignore
-├── scripts/
-│   └── find.py               # 主搜索脚本(Python 3.8+)
-└── examples/
-    └── sample-search.txt     # 示例输出
+└── scripts/
+    └── find.py               # 主搜索脚本(Python 3.8+)
 ```
 
 ## 依赖
