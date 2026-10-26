@@ -18,3 +18,7 @@ Thumbs.db
 # Cache
 .cache/
 *.tmp
+
+# 运行态与密钥（审计补）
+node_modules/
+*.pyc
